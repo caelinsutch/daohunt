@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email     String   @unique
+  password  String
+  firstName String
+  lastName  String
+  avatar    String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+  Dao       Dao[]
+}
+
+enum DaoCategory {
+  Collector
+  Grants
+  Impact
+  Investment
+  Media
+  Product
+  Protocol
+  Service
+  SocialCommunity
+}
+
+enum DaoTags {
+  Analytics
+  Art
+  Culture
+  DaoTool
+  DeFi
+  Developers
+  FutureOfWork
+  Gaming
+  Incubator
+  Infastructure
+  Metaverse
+  Music
+  NFTs
+  P2e
+  PublicGoodFunding
+  RealWorldAssetPUrhase
+  Science
+  Sports
+  Sustainability
+  Venture
+}
+
+model Dao {
+  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug String @unique
+
+  category DaoCategory
+  tags     DaoTags[]
+
+  photo String?
+
+  shortDescription String
+  description      String
+
+  website String?
+  twitter String?
+  discord String?
+
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId String @db.Uuid
+}
