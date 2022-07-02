@@ -1,12 +1,11 @@
 import * as c from "@chakra-ui/react"
 import { json, LoaderFunction } from "@remix-run/node"
 import { useLoaderData } from "@remix-run/react"
-import { Limiter } from "~/components/Limiter"
 
+import { Limiter } from "~/components/Limiter"
 import { db } from "~/lib/db.server"
 import { useLoaderHeaders } from "~/lib/headers"
 import { AwaitedFunction } from "~/lib/helpers/types"
-import { createImageUrl } from "~/lib/s3"
 
 const getPost = async (slug?: string) => {
   if (!slug) throw new Response("ID required", { status: 400 })
@@ -49,11 +48,11 @@ export default function PostDetail() {
         </c.Stack>
         {post.author.avatar && (
           <c.HStack>
-            <c.Avatar size="sm" src={createImageUrl(post.author.avatar)} name={post.author.firstName} />
+            <c.Avatar size="sm" src={post.author.avatar} name={post.author.firstName} />
             <c.Text>{post.author.firstName}</c.Text>
           </c.HStack>
         )}
       </c.Stack>
-      </Limiter>
+    </Limiter>
   )
 }

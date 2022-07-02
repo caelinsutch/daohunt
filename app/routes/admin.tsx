@@ -12,7 +12,6 @@ import { getCurrentUser, requireUser } from "~/services/auth/auth.server"
 export const loader: LoaderFunction = async ({ request }) => {
   await requireUser(request)
   const user = await getCurrentUser(request)
-  console.log(user)
   if (user.role !== Role.ADMIN) {
     throw redirect(`/daos`)
   }

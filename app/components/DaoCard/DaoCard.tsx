@@ -1,4 +1,4 @@
-import { Avatar, Box, Heading, HStack, Tag, Wrap, Text } from "@chakra-ui/react";
+import { Avatar, Box, Heading, HStack, Tag, Text,Wrap } from "@chakra-ui/react";
 import { DaoCategory, DaoTags } from "@prisma/client";
 
 type DaoCardProps = {

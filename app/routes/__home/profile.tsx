@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Box, Flex, Heading, Link, LinkProps, Stack, useColorModeValue } from "@chakra-ui/react"
 import { NavLink, Outlet } from "@remix-run/react"
+
 import { Limiter } from "~/components/Limiter"
 
 export default function ProfileLayout() {

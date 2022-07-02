@@ -8,13 +8,9 @@ const ERROR = "error"
 module.exports = {
   root: true,
   // ignorePatterns: ["./api/**"],
-
-  parser: "@typescript-eslint/parser",
-
-  plugins: ["@typescript-eslint"],
+  plugins: ["simple-import-sort"],
 
   extends: [
-    "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
     "@remix-run/eslint-config",
@@ -23,6 +19,10 @@ module.exports = {
     "prettier",
   ],
   rules: {
+    "simple-import-sort/imports": [
+      "error",
+      { groups: [["^react", "^@?\\w", "^\\u0000"], ["^"], ["^lib?\\w", "^components?\\w"], ["^\\."]] },
+    ],
     "@typescript-eslint/ban-types": OFF,
     "@typescript-eslint/array-type": OFF,
     "@typescript-eslint/ban-ts-ignore": OFF,

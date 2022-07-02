@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken"
+
 import { APP_SECRET } from "./config.server"
 
 type Payload = Record<string, any>

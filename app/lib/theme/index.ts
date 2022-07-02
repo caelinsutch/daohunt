@@ -1,5 +1,6 @@
 import { extendTheme, theme as baseTheme } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools';
+
 import * as components from './components'
 import * as foundations from './foundations'
 

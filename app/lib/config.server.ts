@@ -12,9 +12,6 @@ export const {
   SENTRY_DSN = "SENTRY_DSN",
   SENDGRID_API_KEY = "SENDGRID_API_KEY",
   WEB_URL = "localhost:3000",
-  REDIS_URL = "",
-  AWS_ACCESS_KEY_USER,
-  AWS_SECRET_KEY_USER,
 } = process.env
 
 // WEB URL

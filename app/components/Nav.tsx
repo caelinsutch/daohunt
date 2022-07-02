@@ -3,7 +3,6 @@ import { GiHamburgerMenu } from "react-icons/gi"
 import * as c from "@chakra-ui/react"
 import { Link, useSubmit } from "@remix-run/react"
 
-import { createImageUrl } from "~/lib/s3"
 import type { CurrentUser } from "~/services/auth/auth.server"
 
 import { Limiter } from "./Limiter"
@@ -74,7 +73,7 @@ export function Nav(props: Props) {
                   color="black"
                   boxSize="35px"
                   bg="purple.50"
-                  src={createImageUrl(props.user.avatar)}
+                  src={props.user.avatar}
                   name={props.user.firstName}
                 />
               ) : (

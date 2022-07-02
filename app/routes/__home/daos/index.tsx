@@ -1,17 +1,14 @@
 import * as c from "@chakra-ui/react"
-import { Avatar } from "@chakra-ui/react"
-import { json,LoaderFunction, MetaFunction } from "@remix-run/node"
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node"
 import { Link, useLoaderData } from "@remix-run/react"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
+
 import DaoCard from "~/components/DaoCard"
 import { Limiter } from "~/components/Limiter"
-
-import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
 import { db } from "~/lib/db.server"
 import { useLoaderHeaders } from "~/lib/headers"
 import { AwaitedFunction } from "~/lib/helpers/types"
-import { createImageUrl } from "~/lib/s3"
 
 dayjs.extend(relativeTime)
 
@@ -53,7 +50,7 @@ export default function Posts() {
       <c.Stack py={10} spacing={8}>
         <c.Heading fontSize={{ base: "2xl", md: "3xl" }}>Posts</c.Heading>
         <c.SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
-          {posts.map(({ slug, name, category, id, shortDescription, tags, website, photo}) => (
+          {posts.map(({ slug, name, category, id, shortDescription, tags, website, photo }) => (
             <Link to={slug} key={id}>
               <DaoCard
                 name={name}

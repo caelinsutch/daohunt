@@ -1,34 +1,43 @@
-import * as React from "react"
+import React from "react"
 import * as c from "@chakra-ui/react"
+import { DaoCategory } from "@prisma/client"
 import { ActionFunction, redirect } from "@remix-run/node"
 import { useTransition } from "@remix-run/react"
 import { z } from "zod"
 
-import { Form, FormError, FormField } from "~/components/Form"
+import { Form } from "~/components/Form"
+import { DaoForm } from "~/components/Organisms/Forms"
 import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/components/Tile"
 import { db } from "~/lib/db.server"
 import { validateFormData } from "~/lib/form"
 import { badRequest } from "~/lib/remix"
 import { getCurrentUser } from "~/services/auth/auth.server"
-import { DaoCategory } from "@prisma/client"
 
 export const action: ActionFunction = async ({ request }) => {
   const postSchema = z.object({
     name: z.string().min(1, { message: "Required" }),
+    slug: z
+      .string()
+      .min(1, { message: "Required" })
+      .regex(/^[a-zA-Z0-9_-]*$/, { message: "Must be a valid URL" }),
     description: z.string().min(1, { message: "Required" }),
     category: z.nativeEnum(DaoCategory, { errorMap: () => ({ message: "Invalid category" }) }),
+    photo: z.string(),
   })
   const formData = await request.formData()
   const { data, fieldErrors } = await validateFormData(postSchema, formData)
   const user = await getCurrentUser(request)
   if (fieldErrors) return badRequest({ fieldErrors, data })
-  const post = await db.dao.create({ data: { ...data, slug: data.name.replace(' ', ''), shortDescription: '', description: '', author: { connect: { id: user.id } } } })
-  return redirect(`/admin/posts/${post.id}`)
+  const post = await db.dao.create({
+    data: {
+      ...data,
+      slug: data.name.replace(" ", ""),
+      shortDescription: "",
+      author: { connect: { id: user.id } },
+    },
+  })
+  return redirect(`/admin/daos/${post.slug}`)
 }
-
-const categoryOptions: { label: string; value: DaoCategory }[] = [
-  { value: DaoCategory.Collector, label: "Collector" },
-]
 
 export default function NewPost() {
   const [isDirty, setIsDirty] = React.useState(false)
@@ -38,7 +47,7 @@ export default function NewPost() {
   return (
     <c.Stack spacing={4}>
       <c.Flex justify="space-between">
-        <c.Heading>New post</c.Heading>
+        <c.Heading>New DAO</c.Heading>
       </c.Flex>
 
       <Form
@@ -55,25 +64,7 @@ export default function NewPost() {
             <TileHeading>Info</TileHeading>
           </TileHeader>
           <TileBody>
-            <c.Stack spacing={4}>
-              <FormField name="name" label="Name" placeholder="My post" min={1} />
-              <FormField name="description" label="Description" input={<c.Textarea rows={6} />} />
-              <FormField
-                name="category"
-                label="Category"
-                placeholder="Select category"
-                input={
-                  <c.Select>
-                    {categoryOptions.map(({ value, label }) => (
-                      <option value={value} key={value}>
-                        {label}
-                      </option>
-                    ))}
-                  </c.Select>
-                }
-              />
-              <FormError />
-            </c.Stack>
+            <DaoForm />
           </TileBody>
           <TileFooter>
             <c.ButtonGroup>

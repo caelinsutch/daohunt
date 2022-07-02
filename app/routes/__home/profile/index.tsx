@@ -11,12 +11,9 @@ import { Tile, TileBody, TileFooter, TileHeader, TileHeading } from "~/component
 import { shallowEqual, validateFormData } from "~/lib/form"
 import { useToast } from "~/lib/hooks/useToast"
 import { badRequest } from "~/lib/remix"
-import { createImageUrl } from "~/lib/s3"
-import { UPLOAD_PATHS } from "~/lib/uploadPaths"
 import type { CurrentUser } from "~/services/auth/auth.server"
 import { getCurrentUser, requireUser } from "~/services/auth/auth.server"
 import { updateUser } from "~/services/user/user.server"
-import { Limiter } from "~/components/Limiter"
 
 export const meta: MetaFunction = () => {
   return { title: "Profile" }
@@ -73,102 +70,93 @@ export default function Profile() {
   const isSubmitting = state === "submitting"
 
   return (
-      <c.Stack spacing={6}>
-        <Form
-          ref={formRef}
-          method="post"
-          onChange={(e) => {
-            const formData = new FormData(e.currentTarget)
-            const data = Object.fromEntries(formData) as Record<string, string>
-            const { firstName, lastName, email } = user
-            const isDirty = !shallowEqual({ firstName, lastName, email }, data)
-            setIsDirty(isDirty)
-          }}
-        >
-          <Tile>
-            <TileHeader>
-              <TileHeading>Info</TileHeading>
-            </TileHeader>
-            <TileBody>
-              <c.Stack spacing={4} maxW="300px">
-                <FormField
-                  label="Email address"
-                  defaultValue={user.email}
-                  name="email"
-                  placeholder="jim@gmail.com"
-                />
-                <FormField
-                  label="First name"
-                  defaultValue={user.firstName}
-                  name="firstName"
-                  placeholder="Jim"
-                />
-                <FormField
-                  label="Last name"
-                  defaultValue={user.lastName}
-                  name="lastName"
-                  placeholder="Sebe"
-                />
-                <FormError />
-              </c.Stack>
-            </TileBody>
-            <TileFooter>
-              <c.ButtonGroup>
-                <c.Button
-                  type="submit"
-                  isDisabled={!isDirty || isSubmitting}
-                  isLoading={isSubmitting}
-                  colorScheme="purple"
-                  size="sm"
-                >
-                  Update
-                </c.Button>
-                {isDirty && (
-                  <c.Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      formRef.current?.reset()
-                      setIsDirty(false)
-                    }}
-                  >
-                    Cancel
-                  </c.Button>
-                )}
-              </c.ButtonGroup>
-            </TileFooter>
-          </Tile>
-        </Form>
+    <c.Stack spacing={6}>
+      <Form
+        ref={formRef}
+        method="post"
+        onChange={(e) => {
+          const formData = new FormData(e.currentTarget)
+          const data = Object.fromEntries(formData) as Record<string, string>
+          const { firstName, lastName, email } = user
+          const isDirty = !shallowEqual({ firstName, lastName, email }, data)
+          setIsDirty(isDirty)
+        }}
+      >
         <Tile>
           <TileHeader>
-            <TileHeading>Avatar</TileHeading>
+            <TileHeading>Info</TileHeading>
           </TileHeader>
           <TileBody>
-            <c.VStack w="min-content">
-              <ImageUploader
-                dropzoneOptions={{ maxSize: 1_000_000 }}
-                path={UPLOAD_PATHS.userAvatar(user.id)}
-                onSubmit={handleUpdateAvatar}
+            <c.Stack spacing={4} maxW="300px">
+              <FormField
+                label="Email address"
+                defaultValue={user.email}
+                name="email"
+                placeholder="jim@gmail.com"
+              />
+              <FormField
+                label="First name"
+                defaultValue={user.firstName}
+                name="firstName"
+                placeholder="Jim"
+              />
+              <FormField label="Last name" defaultValue={user.lastName} name="lastName" placeholder="Sebe" />
+              <FormError />
+            </c.Stack>
+          </TileBody>
+          <TileFooter>
+            <c.ButtonGroup>
+              <c.Button
+                type="submit"
+                isDisabled={!isDirty || isSubmitting}
+                isLoading={isSubmitting}
+                colorScheme="purple"
+                size="sm"
               >
-                <c.Avatar src={createImageUrl(user.avatar)} size="xl" />
-              </ImageUploader>
-              {user.avatar && (
+                Update
+              </c.Button>
+              {isDirty && (
                 <c.Button
-                  colorScheme="red"
-                  aria-label="remove image"
-                  onClick={() => handleUpdateAvatar("")}
-                  size="sm"
                   variant="ghost"
-                  leftIcon={<c.Box as={BiTrash} />}
-                  borderRadius="lg"
+                  size="sm"
+                  onClick={() => {
+                    formRef.current?.reset()
+                    setIsDirty(false)
+                  }}
                 >
-                  Remove
+                  Cancel
                 </c.Button>
               )}
-            </c.VStack>
-          </TileBody>
-          <TileFooter>Click on your avatar to upload a new photo</TileFooter>
+            </c.ButtonGroup>
+          </TileFooter>
         </Tile>
-      </c.Stack>
+      </Form>
+      <Tile>
+        <TileHeader>
+          <TileHeading>Avatar</TileHeading>
+        </TileHeader>
+        <TileBody>
+          <c.VStack w="min-content">
+            <ImageUploader onSubmit={handleUpdateAvatar}>
+              <c.Avatar src={user.avatar ?? undefined} size="xl" />
+            </ImageUploader>
+            {user.avatar && (
+              <c.Button
+                colorScheme="red"
+                aria-label="remove image"
+                onClick={() => handleUpdateAvatar("")}
+                size="sm"
+                variant="ghost"
+                leftIcon={<c.Box as={BiTrash} />}
+                borderRadius="lg"
+              >
+                Remove
+              </c.Button>
+            )}
+          </c.VStack>
+        </TileBody>
+        <TileFooter>Click on your avatar to upload a new photo</TileFooter>
+      </Tile>
+    </c.Stack>
   )
 }

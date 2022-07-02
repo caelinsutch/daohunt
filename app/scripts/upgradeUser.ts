@@ -1,4 +1,5 @@
 import { Role } from "@prisma/client"
+
 import { db } from "../lib/db.server"
 
 const upgradeUser = async() => {

@@ -6,7 +6,6 @@ import { SESSION_SECRET } from "~/lib/config.server"
 import { db } from "~/lib/db.server"
 import { createToken, decryptToken } from "~/lib/jwt"
 
-import { sendPasswordChangedEmail, sendResetPasswordEmail } from "../user/user.mailer.server"
 import { comparePasswords, hashPassword } from "./password.server"
 
 export async function login({ email, password }: { email: string; password: string }) {
@@ -21,7 +20,7 @@ export async function sendResetPasswordLink({ email }: { email: string }) {
   const user = await db.user.findUnique({ where: { email } })
   if (user) {
     const token = createToken({ id: user.id })
-    await sendResetPasswordEmail(user, token)
+    console.log("todo implement")
   }
   return true
 }
@@ -30,8 +29,9 @@ export async function resetPassword({ token, password }: { token: string; passwo
   try {
     const payload = decryptToken<{ id: string }>(token)
     const hashedPassword = await hashPassword(password)
-    const user = await db.user.update({ where: { id: payload.id }, data: { password: hashedPassword } })
-    await sendPasswordChangedEmail(user)
+    await db.user.update({ where: { id: payload.id }, data: { password: hashedPassword } })
+    console.log("todo implement")
+    // await sendPasswordChangedEmail(user)
     return true
   } catch (error) {
     return false

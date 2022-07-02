@@ -3693,69 +3693,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"boilerplate-remix@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "boilerplate-remix@workspace:."
-  dependencies:
-    "@chakra-ui/react": 1.8.8
-    "@chakra-ui/theme-tools": ^2.0.2
-    "@commitlint/cli": 16.3.0
-    "@commitlint/config-conventional": 16.2.4
-    "@emotion/cache": 11.7.1
-    "@emotion/react": 11.9.0
-    "@emotion/server": 11.4.0
-    "@emotion/styled": 11.8.1
-    "@prisma/client": ^3.15.2
-    "@remix-run/dev": 1.4.3
-    "@remix-run/eslint-config": 1.4.3
-    "@remix-run/express": 1.4.3
-    "@remix-run/node": 1.4.3
-    "@remix-run/react": 1.4.3
-    "@remix-run/server-runtime": 1.4.3
-    "@sendgrid/client": 7.6.2
-    "@sendgrid/mail": 7.6.2
-    "@types/bcrypt": 5.0.0
-    "@types/compression": 1.7.2
-    "@types/express": 4.17.13
-    "@types/jsonwebtoken": 8.5.8
-    "@types/morgan": 1.9.3
-    "@types/nodemailer": 6.4.4
-    "@types/react": 17.0.45
-    "@types/react-dom": 17.0.17
-    "@typescript-eslint/eslint-plugin": 5.23.0
-    "@typescript-eslint/parser": 5.23.0
-    aws-sdk: 2.1130.0
-    bcrypt: 5.0.1
-    compression: 1.7.4
-    cross-env: 7.0.3
-    dayjs: 1.11.2
-    dotenv: 16.0.1
-    esbuild: 0.14.39
-    esbuild-register: 3.3.2
-    eslint: 8.15.0
-    eslint-config-prettier: 8.5.0
-    eslint-plugin-import: 2.26.0
-    eslint-plugin-prettier: ^4.1.0
-    eslint-plugin-simple-import-sort: 7.0.0
-    framer-motion: 6.3.3
-    handlebars: 4.7.7
-    husky: 8.0.1
-    jsonwebtoken: 8.5.1
-    lint-staged: 12.4.1
-    morgan: 1.10.0
-    nodemailer: 6.7.5
-    npm-run-all: 4.1.5
-    prettier: ^2.7.1
-    prisma: ^3.15.2
-    react: 17.0.2
-    react-dom: 17.0.2
-    react-dropzone: 14.2.1
-    react-icons: 4.3.1
-    typescript: 4.6.4
-    zod: 3.16.0
-  languageName: unknown
-  linkType: soft
-
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
   resolution: "brace-expansion@npm:1.1.11"
@@ -4597,6 +4534,69 @@ __metadata:
   checksum: d240b7757544460ae0586a341a53110ab0a61126570ef2d8c731e3eab3f0cb6e488e2609e6a69b46727635de49be20b071688698744417ff1b6c1d7ccd03e0de
   languageName: node
   linkType: hard
+
+"daohunt@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "daohunt@workspace:."
+  dependencies:
+    "@chakra-ui/react": 1.8.8
+    "@chakra-ui/theme-tools": ^2.0.2
+    "@commitlint/cli": 16.3.0
+    "@commitlint/config-conventional": 16.2.4
+    "@emotion/cache": 11.7.1
+    "@emotion/react": 11.9.0
+    "@emotion/server": 11.4.0
+    "@emotion/styled": 11.8.1
+    "@prisma/client": ^3.15.2
+    "@remix-run/dev": 1.4.3
+    "@remix-run/eslint-config": 1.4.3
+    "@remix-run/express": 1.4.3
+    "@remix-run/node": 1.4.3
+    "@remix-run/react": 1.4.3
+    "@remix-run/server-runtime": 1.4.3
+    "@sendgrid/client": 7.6.2
+    "@sendgrid/mail": 7.6.2
+    "@types/bcrypt": 5.0.0
+    "@types/compression": 1.7.2
+    "@types/express": 4.17.13
+    "@types/jsonwebtoken": 8.5.8
+    "@types/morgan": 1.9.3
+    "@types/nodemailer": 6.4.4
+    "@types/react": 17.0.45
+    "@types/react-dom": 17.0.17
+    "@typescript-eslint/eslint-plugin": 5.23.0
+    "@typescript-eslint/parser": 5.23.0
+    aws-sdk: 2.1130.0
+    bcrypt: 5.0.1
+    compression: 1.7.4
+    cross-env: 7.0.3
+    dayjs: 1.11.2
+    dotenv: 16.0.1
+    esbuild: 0.14.39
+    esbuild-register: 3.3.2
+    eslint: 8.15.0
+    eslint-config-prettier: 8.5.0
+    eslint-plugin-import: 2.26.0
+    eslint-plugin-prettier: ^4.1.0
+    eslint-plugin-simple-import-sort: 7.0.0
+    framer-motion: 6.3.3
+    handlebars: 4.7.7
+    husky: 8.0.1
+    jsonwebtoken: 8.5.1
+    lint-staged: 12.4.1
+    morgan: 1.10.0
+    nodemailer: 6.7.5
+    npm-run-all: 4.1.5
+    prettier: ^2.7.1
+    prisma: ^3.15.2
+    react: 17.0.2
+    react-dom: 17.0.2
+    react-dropzone: 14.2.1
+    react-icons: 4.3.1
+    typescript: 4.6.4
+    zod: 3.16.0
+  languageName: unknown
+  linkType: soft
 
 "dargs@npm:^7.0.0":
   version: 7.0.0

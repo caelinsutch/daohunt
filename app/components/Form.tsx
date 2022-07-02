@@ -4,7 +4,6 @@ import type { FormProps as RemixFormProps } from "@remix-run/react"
 import { Form as RemixForm, useActionData, useTransition } from "@remix-run/react"
 
 import type { ActionData } from "~/lib/form"
-import { createImageUrl } from "~/lib/s3"
 
 import { ImageUploader } from "./ImageUploader"
 
@@ -51,20 +50,20 @@ export function FormField({ label, input, ...props }: FormFieldProps) {
 }
 
 interface ImageFieldProps extends Omit<c.FlexProps, "defaultValue"> {
-  path: string
   name: string
   label: string
   defaultValue?: string | null | undefined
   isRequired?: boolean
   placeholder?: string
+  onUpload: (avatar: string) => void
 }
 
 export function ImageField({
   label,
-  path,
   placeholder,
   isRequired,
   defaultValue,
+  onUpload,
   ...props
 }: ImageFieldProps) {
   const form = useActionData<ActionData<any>>()
@@ -72,26 +71,27 @@ export function ImageField({
   return (
     <c.FormControl isRequired={isRequired} isInvalid={!!form?.fieldErrors?.[props.name]}>
       <c.FormLabel htmlFor={props.name}>{label}</c.FormLabel>
-      <c.Box>
-        <ImageUploader onSubmit={setImage} path={path}>
+      <c.Box w="100px">
+        <ImageUploader
+          onSubmit={(avatar) => {
+            setImage(avatar)
+            onUpload(avatar)
+          }}
+        >
           {image ? (
-            <c.Image
-              _hover={{ opacity: 0.8 }}
-              objectFit="cover"
-              src={createImageUrl(image)}
-              h="200px"
-              w="100%"
-              {...props}
-            />
+            <c.Avatar _hover={{ opacity: 0.8 }} objectFit="cover" src={image} h="100px" w="100px" />
           ) : (
             <c.Center
               _hover={{ bg: "whiteAlpha.100", transition: "100ms all" }}
               bg="whiteAlpha.50"
-              h="200px"
-              w="100%"
+              h="100px"
+              w="100px"
+              borderRadius="full"
               {...props}
             >
-              <c.Text color="gray.400">{placeholder || "Upload an image"}</c.Text>
+              <c.Text color="gray.400" fontSize="sm" textAlign="center">
+                {placeholder || "Upload an image"}
+              </c.Text>
             </c.Center>
           )}
         </ImageUploader>
